@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-// Import google genai sdk
-import { GoogleGenAI } from "@google/genai";
+import { translateText } from "../utils/geminiAPI"
 
 export default function Main() {
   // What language to translate to
@@ -13,22 +12,12 @@ export default function Main() {
   // loading state
   const [isLoading, setIsLoading] = useState(true)
 
-
-  const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     try {
-      const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
-      const promptMessage = `Translate the following text exactly as is in ${lang}: ${sourceText}`
-
-      const response = await ai.models.generateContent({
-        model: "gemini-2.0-flash-001",
-        contents: promptMessage,
-      });
-
-      setTranslatedText(response.text || "Translation not available.")
+      const translation = await translateText(lang, sourceText)
+      setTranslatedText(translation)
     }
     catch (error) {
       setTranslatedText(`${error}: There was a problem translating your text. Please try again.`)
@@ -40,7 +29,7 @@ export default function Main() {
   return (
     <main className="flex flex-col items-center justify-center p-6">
       <section className="flex flex-col w-full max-w-md bg-white shadow-md rounded-xl p-6 space-y-6">
-        <form className="flex flex-col space-y-4" onSubmit={onSubmit} noValidate>
+        <form className="flex flex-col space-y-4" onSubmit={handleSubmit} noValidate>
           <label htmlFor="language-select" className="text-sm font-medium">
             Target language
           </label>

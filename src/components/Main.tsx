@@ -1,6 +1,5 @@
 import { useState } from "react";
-
-import { translateText } from "../utils/geminiAPI"
+import { handleSubmit } from "../utils/handleSubmit";
 
 export default function Main() {
   // What language to translate to
@@ -10,26 +9,17 @@ export default function Main() {
   // Translated text
   const [translatedText, setTranslatedText] = useState("")
   // loading state
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    try {
-      const translation = await translateText(lang, sourceText)
-      setTranslatedText(translation)
-    }
-    catch (error) {
-      setTranslatedText(`${error}: There was a problem translating your text. Please try again.`)
-    } finally {
-      setIsLoading(false)
-    }
-  }
 
   return (
     <main className="flex flex-col items-center justify-center p-6">
       <section className="flex flex-col w-full max-w-md bg-white shadow-md rounded-xl p-6 space-y-6">
-        <form className="flex flex-col space-y-4" onSubmit={handleSubmit} noValidate>
+        <form
+          className="flex flex-col space-y-4"
+          onSubmit={(e) => handleSubmit(e, { lang, sourceText, setTranslatedText, setIsLoading })}
+          noValidate
+        >
           <label htmlFor="language-select" className="text-sm font-medium">
             Target language
           </label>
@@ -52,7 +42,7 @@ export default function Main() {
         </form>
 
         <div className="bg-gray-50 border border-gray-200 rounded-md p-3 text-gray-600">
-          <p id="translated-text">{isLoading ? "Your translation will appear here..." : translatedText} </p>
+          <p id="translated-text">{translatedText || "Your translation will appear here..."} </p>
         </div>
       </section>
     </main>

@@ -1,4 +1,4 @@
-type LanguageOptions = {
+export type LanguageOptions = {
   name: string;
   code: string;
   flag: string;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { languages } from "../utils/languages"
 import { handleSubmit } from "../utils/handleSubmit";
+import LanguageButton from "./LanguageButton";
 
 export default function Main() {
   // What language to translate to
@@ -12,13 +13,8 @@ export default function Main() {
   // loading state
   const [isLoading, setIsLoading] = useState(false)
 
-  const languageElement = languages.map((language) =>
-    <button className="cursor-pointer" onClick={() => setLang(language.code)} >
-      <div className="flex flex-col bg-white rounded-md shadow-md p-4">
-        <span className="text-4xl">{language.flag}</span>
-        <span>{language.name}</span>
-      </div>
-    </button>
+  const languageButtonElement = languages.map((language, index) =>
+    <LanguageButton index={index} lang={lang} setLang={setLang} language={language} />
   )
 
 
@@ -26,7 +22,7 @@ export default function Main() {
     <main className="flex flex-col items-center justify-center p-6 bg-gray-100">
       <section className="flex flex-col w-full max-w-md p-6 space-y-6">
         <div className="grid grid-cols-3 gap-4">
-          {languageElement}
+          {languageButtonElement}
         </div>
         <form
           className="flex flex-col space-y-4"
@@ -37,7 +33,7 @@ export default function Main() {
             value={sourceText}
             onChange={(e) => setSourceText(e.target.value)}
             placeholder="Enter text to translate..."
-            className="bg-white rounded-md shadow-md p-3 h-32 resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-600"
+            className="bg-white rounded-md shadow-md p-3 h-32 resize-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
           >
           </textarea>
           <button type="submit" className="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded-md py-2">Translate</button>

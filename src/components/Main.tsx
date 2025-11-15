@@ -17,6 +17,10 @@ export default function Main() {
     <LanguageButton index={index} lang={lang} setLang={setLang} language={language} />
   )
 
+  function handleReset() {
+    setSourceText("");
+    setTranslatedText("");
+  }
 
   return (
     <main className="flex flex-col items-center justify-center p-6 bg-gray-100">
@@ -36,11 +40,14 @@ export default function Main() {
             className="bg-white rounded-md shadow-md p-3 h-32 resize-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
           >
           </textarea>
-          <button type="submit" className="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded-md py-2">Translate</button>
+          <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-2">
+            <button type="submit" className="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded-md py-4 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={isLoading}>Translate</button>
+            <button type="reset" onClick={handleReset} className="bg-blue-700 hover:bg-blue-800 cursor-pointer text-white rounded-md py-4">Reset</button>
+          </div>
         </form>
 
         <div className="bg-white rounded-md shadow-md p-3 text-gray-600">
-          <p id="translated-text">{translatedText || "Your translation will appear here..."} </p>
+          <p id="translated-text">{translatedText || `Your translation will appear here...`} </p>
         </div>
       </section>
     </main>

@@ -11,13 +11,18 @@ export const languages: LanguageOptions[] = [
     flag: "🇪🇸",
   },
   {
-    name: "Japanese",
-    code: "ja",
-    flag: "🇯🇵",
+    name: "Korean",
+    code: "ko",
+    flag: "🇰🇷",
   },
   {
     name: "French",
     code: "fr",
     flag: "🇫🇷",
+  },
+  {
+    name: "English",
+    code: "en",
+    flag: "🇬🇧",
   },
 ];

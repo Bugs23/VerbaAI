@@ -20,12 +20,13 @@ export default function Main() {
   function handleReset() {
     setSourceText("");
     setTranslatedText("");
+    setLang("es");
   }
 
   return (
-    <main className="flex flex-col items-center justify-center p-6 bg-gray-100">
+    <main className="flex flex-col items-center justify-center p-6 bg-gray-100 text-gray-500">
       <section className="flex flex-col w-full max-w-md p-6 space-y-6">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           {languageButtonElement}
         </div>
         <form
@@ -37,16 +38,16 @@ export default function Main() {
             value={sourceText}
             onChange={(e) => setSourceText(e.target.value)}
             placeholder="Enter text to translate..."
-            className="bg-white rounded-md shadow-md p-3 h-32 resize-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600"
+            className="bg-white rounded-md shadow-md p-3 h-32 resize-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500"
           >
           </textarea>
-          <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-2">
-            <button type="submit" className="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded-md py-4 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={isLoading}>Translate</button>
-            <button type="reset" onClick={handleReset} className="bg-blue-700 hover:bg-blue-800 cursor-pointer text-white rounded-md py-4">Reset</button>
+          <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4 pt-2">
+            <button type="submit" className="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded-md py-4 disabled:bg-blue-300 disabled:cursor-not-allowed" disabled={isLoading}>Translate</button>
+            <button type="reset" onClick={handleReset} className="bg-white hover:bg-blue-100 text-blue-500 border-2 border-blue-500 cursor-pointer rounded-md py-4">Reset</button>
           </div>
         </form>
 
-        <div className="bg-white rounded-md shadow-md p-3 text-gray-600">
+        <div className="bg-white rounded-md shadow-md p-3">
           <p id="translated-text">{translatedText || `Your translation will appear here...`} </p>
         </div>
       </section>

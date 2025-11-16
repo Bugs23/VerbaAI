@@ -7,7 +7,21 @@ export async function translateText(
 ): Promise<string> {
   const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
   const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
-  const promptMessage = `Translate the following text exactly as is in ${lang}: ${sourceText}`;
+  const promptMessage = `
+    You are a translation engine. Detect the source language and translate the text naturally into the target language: ${lang}.
+
+    RULES:
+    - If the target language uses a non-Latin script (e.g., Korean, Japanese, Chinese, Arabic, Hindi), output the translation in phonetic romanization instead of the native writing system.
+    - Output ONLY the translated text (or romanized equivalent).
+    - Do NOT explain anything.
+    - Do NOT add or remove meaning.
+    - Do NOT add quotes or extra text.
+    - Preserve emojis, punctuation, spacing, and line breaks.
+    - Keep the tone (casual, polite, slang, formal) identical to the original.
+
+    Text:
+    ${sourceText}
+  `;
 
   try {
     const response = await ai.models.generateContent({

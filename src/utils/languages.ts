@@ -20,9 +20,4 @@ export const languages: LanguageOptions[] = [
     code: "fr",
     flag: "🇫🇷",
   },
-  {
-    name: "English",
-    code: "en",
-    flag: "🇬🇧",
-  },
 ];

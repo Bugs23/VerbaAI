@@ -1,10 +1,11 @@
 import { translateText } from "./geminiAPI";
+import type { LangCode } from "./SupportedLanguages";
 
 type HandleSubmitProps = {
-  lang: string;
+  lang: LangCode;
   sourceText: string;
-  setTranslatedText: (translation: string) => void;
-  setIsLoading: (boolean: boolean) => void;
+  setTranslatedText: React.Dispatch<React.SetStateAction<string>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export async function handleSubmit(
@@ -12,6 +13,11 @@ export async function handleSubmit(
   { lang, sourceText, setTranslatedText, setIsLoading }: HandleSubmitProps
 ) {
   e.preventDefault();
+
+  if (!sourceText) {
+    setTranslatedText("Please enter some text to translate.");
+    return;
+  }
 
   try {
     setIsLoading(true);

@@ -1,8 +1,9 @@
 // Import google genai sdk
 import { GoogleGenAI } from "@google/genai";
+import type { LangCode } from "./SupportedLanguages";
 
 export async function translateText(
-  lang: string,
+  lang: LangCode,
   sourceText: string
 ): Promise<string> {
   const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;

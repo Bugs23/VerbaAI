@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { languages } from "../utils/languages"
+import { languages } from "../utils/SupportedLanguages"
+import type { LangCode } from "../utils/SupportedLanguages";
 import { handleSubmit } from "../utils/handleSubmit";
-import LanguageButton from "./LanguageButton";
+import LanguagSelectButton from "./LanguagSelectButton";
 
 export default function Main() {
   // What language to translate to
-  const [lang, setLang] = useState("es");
+  const [lang, setLang] = useState<LangCode>("es");
   // What text to translate
   const [sourceText, setSourceText] = useState("");
   // Translated text
@@ -13,8 +14,13 @@ export default function Main() {
   // loading state
   const [isLoading, setIsLoading] = useState(false)
 
-  const languageButtonElement = languages.map((language, index) =>
-    <LanguageButton index={index} lang={lang} setLang={setLang} language={language} />
+  const LanguagSelectButtons = languages.map((language) =>
+    <LanguagSelectButton
+      key={language.code}
+      lang={lang}
+      setLang={setLang}
+      language={language}
+    />
   )
 
   function handleReset() {
@@ -27,7 +33,7 @@ export default function Main() {
     <main className="flex flex-col items-center justify-center p-6 bg-gray-100 text-gray-500">
       <section className="flex flex-col w-full max-w-md p-6 space-y-6">
         <div className="grid grid-cols-3 gap-4">
-          {languageButtonElement}
+          {LanguagSelectButtons}
         </div>
         <form
           className="flex flex-col space-y-4"
@@ -38,7 +44,7 @@ export default function Main() {
             value={sourceText}
             onChange={(e) => setSourceText(e.target.value)}
             placeholder="Enter text to translate..."
-            className="bg-white rounded-md shadow-md p-3 h-32 resize-none focus:border-2 focus:border-blue-500 focus:outline-none placeholder-gray-500"
+            className="bg-white rounded-md shadow-md p-3 h-32 resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-500"
           >
           </textarea>
           <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4 pt-2">

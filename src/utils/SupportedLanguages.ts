@@ -1,10 +1,12 @@
-export type LanguageOptions = {
+export type SupportedLanguage = {
   name: string;
   code: string;
   flag: string;
 };
 
-export const languages: LanguageOptions[] = [
+export type LangCode = (typeof languages)[number]["code"];
+
+export const languages: SupportedLanguage[] = [
   {
     name: "Spanish",
     code: "es",

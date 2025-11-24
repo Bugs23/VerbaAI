@@ -1,11 +1,11 @@
 import { useContext, createContext, useState, useEffect } from "react"
 import type { ReactNode } from "react"
 
-export type theme = "light" | "dark"
+export type Theme = "light" | "dark"
 
 export type ThemeContextType = {
-  theme: theme,
-  setTheme: (theme: theme) => void
+  theme: Theme,
+  setTheme: (theme: Theme) => void
   toggleTheme: () => void
 }
 
@@ -16,13 +16,13 @@ interface ThemeProviderProps {
 const ThemeContext = createContext<ThemeContextType | null>(null)
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<theme>("light")
+  const [theme, setTheme] = useState<Theme>("light")
 
   // Check for saved theme in localStorage
   useEffect(() => {
 
     // Get theme from localStorage
-    const savedTheme = localStorage.getItem("theme") as theme | null
+    const savedTheme = localStorage.getItem("theme") as Theme | null
 
     // Set the theme if it exists
     if (savedTheme === "light" || savedTheme === "dark") {

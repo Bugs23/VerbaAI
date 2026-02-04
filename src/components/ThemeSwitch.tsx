@@ -5,9 +5,11 @@ export default function ThemeSwitch() {
   const { theme, toggleTheme } = useTheme()
 
   return (
-    <label className="inline-flex items-center cursor-pointer select-none gap-3 mt-4">
+    <label htmlFor="theme-toggle" className="inline-flex items-center cursor-pointer select-none gap-3 mt-4">
       <input
+        id="theme-toggle"
         type="checkbox"
+        aria-label="theme"
         onChange={toggleTheme}
         checked={theme === "dark"}
         className="sr-only"

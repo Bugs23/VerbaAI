@@ -4,24 +4,18 @@ import type { LangCode } from "./SupportedLanguages";
 
 export async function translateText(
   lang: LangCode,
-  sourceText: string
+  sourceText: string,
 ): Promise<string> {
   const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
   const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
   const promptMessage = `
-    You are a translation engine. Detect the source language and translate the text naturally into the target language: ${lang}.
+Translate the following text into ${lang}.
+If the target language uses a non-Latin script, output a phonetic romanization.
+Preserve tone, emojis, punctuation, and formatting.
+Return only the translation.
 
-    RULES:
-    - If the target language uses a non-Latin script (e.g., Korean, Japanese, Chinese, Arabic, Hindi), output the translation in phonetic romanization instead of the native writing system.
-    - Output ONLY the translated text (or romanized equivalent).
-    - Do NOT explain anything.
-    - Do NOT add or remove meaning.
-    - Do NOT add quotes or extra text.
-    - Preserve emojis, punctuation, spacing, and line breaks.
-    - Keep the tone (casual, polite, slang, formal) identical to the original.
-
-    Text:
-    ${sourceText}
+Text:
+${sourceText}
   `;
 
   try {
@@ -34,7 +28,7 @@ export async function translateText(
   } catch (error) {
     console.error("Translation error:", error);
     throw new Error(
-      `There was a problem translating your text. Please try again.`
+      `There was a problem translating your text. Please try again.`,
     );
   }
 }

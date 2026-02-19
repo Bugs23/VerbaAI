@@ -1,5 +1,5 @@
 import { render, waitFor } from "@testing-library/react"
-import { ThemeProvider, useTheme } from "./ThemeContext"
+import { ThemeProvider } from "./ThemeContext"
 
 it("defaults to light on first render", async () => {
   // ARRANGE: nothing to set up, provider should default to light

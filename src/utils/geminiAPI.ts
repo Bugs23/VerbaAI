@@ -2,10 +2,7 @@
 import { GoogleGenAI } from "@google/genai";
 import type { LangCode } from "./SupportedLanguages";
 
-export async function translateText(
-  lang: LangCode,
-  sourceText: string,
-): Promise<string> {
+export async function translateText(lang: LangCode, sourceText: string): Promise<string> {
   const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
   const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
   const promptMessage = `
@@ -20,15 +17,13 @@ ${sourceText}
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-001",
+      model: "gemini-flash-latest",
       contents: promptMessage,
     });
 
     return response.text || "Translation not available.";
   } catch (error) {
     console.error("Translation error:", error);
-    throw new Error(
-      `There was a problem translating your text. Please try again.`,
-    );
+    throw new Error(`There was a problem translating your text. Please try again.`);
   }
 }

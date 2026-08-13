@@ -7,7 +7,7 @@ it("updates source text when the user types", async () => {
   /* Arrange */
   const user = userEvent.setup()
   render(<Main />)
-  const textbox = screen.getByRole("textbox")
+  const textbox = screen.getByRole("textbox", { name: /text to translate/i })
 
   /* Act */
   await user.type(textbox, "Test input")
@@ -35,4 +35,17 @@ it("checks if the textbox clears when the user clicks the reset button", async (
   /* Assert */
   expect(textbox).toHaveValue("")
 
+})
+
+it("checks if empty Translate submit shows message", async () => {
+  /* Arrange */
+  const user = userEvent.setup()
+  render(<Main />)
+  const submitButton = screen.getByRole("button", { name: /Translate/i })
+
+  /* Act */
+  await user.click(submitButton)
+
+  /* Assert */
+  expect(screen.getByText("Please enter some text to translate.")).toBeInTheDocument()
 })

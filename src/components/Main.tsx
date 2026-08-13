@@ -41,6 +41,7 @@ export default function Main() {
           noValidate
         >
           <textarea
+            aria-label="Text to translate"
             value={sourceText}
             onChange={(e) => setSourceText(e.target.value)}
             placeholder="Enter text to translate..."
